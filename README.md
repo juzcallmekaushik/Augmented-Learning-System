@@ -17,6 +17,6 @@ Features of ALS:
 **How to run ALS:**
 
 1. Download this Repository
-2. Create a new .env file and input these: `GeminiAPI` & `MongoDBLink`
+2. Create a new .env file and input these: `GeminiAPI` & `MongoDBLink` (Like how its done in [.env.example](https://github.com/juzcallmekaushik/Augmented-Learning-System/blob/main/.env.example))
 3. Edit all the File Paths
 4. Run [main.py](https://github.com/juzcallmekaushik/Augmented-Learning-System/blob/main/src/main.py)
