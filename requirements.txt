@@ -1,0 +1,12 @@
+pyttsx3
+SpeechRecognition
+pyaudio
+pymongo
+pyautogui
+psutil
+opencv-python
+webbrowser
+requests
+pyjokes
+winshell
+python-dotenv
