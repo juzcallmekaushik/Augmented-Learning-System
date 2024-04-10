@@ -15,11 +15,15 @@ import app
 from utils.data import (
       updated_keywords,
 	HelloResponses,
+      days_names,
+      weekdays,
 )
 from makersuite import (
       emails,
       gemini,
 )
+
+from datetime import timedelta
 
 from clock import (
       alarm,
@@ -82,6 +86,8 @@ from desktop.control import (
 
 from utils.mongodb import (
       bmdb,
+      rmdb,
+      tkdb,
 )
 
 engine = pyttsx3.init('sapi5')
@@ -143,6 +149,26 @@ def getDate():
 def currenttime():
     time = datetime.now().strftime('%I:%M %p')
     speak(f"the current time is {time}.")
+
+import calendar
+from datetime import datetime, timedelta
+
+def get_next_weekday(current_date, target_day):
+    weekdays = {
+        'monday': 0, 'tuesday': 1, 'wednesday': 2,
+        'thursday': 3, 'friday': 4, 'saturday': 5, 'sunday': 6
+    }
+    current_date_obj = datetime.strptime(current_date, "%Y-%m-%d")
+    current_day_index = current_date_obj.weekday()
+
+    target_day_index = weekdays[target_day.lower()]
+    days_until_target = (target_day_index - current_day_index) % 7
+
+    if days_until_target == 0:
+        days_until_target = 7
+
+    next_day_date = current_date_obj + timedelta(days=days_until_target)
+    return next_day_date.strftime("%Y-%m-%d")
 
 def RunEdwin():
       speak(random.choice(HelloResponses))
@@ -352,7 +378,7 @@ def RunEdwin():
                         alarm.set_alarm(tt, Timing, number)
                         
                   
-                  if "focus session" in query or "study session" in query:
+                  if "focus session" in query or "study session" in query or "focus mode" in query:
                         duration1 = ""
                         if "start a focus session" in query: 
                               duration1 = query.replace("start a focus session for ", "")
@@ -365,6 +391,7 @@ def RunEdwin():
                                     min = int(duration1.replace("hour", ""))
                               minutes = min * 60
                         focus.focus_sessions(f"{minutes} minutes")
+                        return
                         
 
                   if 'open' in query:
@@ -386,14 +413,10 @@ def RunEdwin():
                   if 'standby' in query or "power-saving mode" in query or "hibernation" in query:
                         speak("initiating hibernation mode..")
                         speak("wake me up whenever you need anything")
-                        mainfile = "C:\\Users\\Kaushik\\Documents\\Programming\\Augmented Learning System - Edwin\\src\\app.py"
-                        os.startfile(mainfile)
-                        time.sleep(3)
-                        pyautogui.hotkey('alt', 'f1')
                         time.sleep(2)
-                        pyautogui.hotkey('alt', 'f4')
+                        return
 
-                  elif "bookmark" in query:
+                  if "bookmark" in query:
                         if "site" in query or "website" in query:
                               name = input("what would you like to save it as: ")
                               time.sleep(2)
@@ -406,6 +429,66 @@ def RunEdwin():
                               name = input("what is the name of the bookmark?")
                               link = bmdb.get_bookmark(name)
                               webbrowser.open_new_tab(url=link)
+
+                  if "remind" in query or "reminder" in query:
+                        if "remind me to" in query:
+                              reminder = query.replace("remind me to ", "")
+                        elif "set reminder to" in query:
+                              reminder = query.replace("set reminder to ", "")
+                        speak("what time would you like me to remind you?")
+                        timestamp = int(input("Epoch Timestamp: "))
+                        date = datetime.fromtimestamp(timestamp).date()
+                        day = days_names[datetime.fromtimestamp(timestamp).weekday()][1]
+                        rmdb.add_reminders(reminder, timestamp, date, day)
+                  
+                  if "tasks" in query or "task" in query or "schedule" in query or "agenda" in query or "activities" in query or "appointment" in query or "plan" in query:
+                        if "add" in query or "new" in query:
+                              speak("what is the task?")
+                              task = input("Task: ")
+                              speak("what time would you like me to remind you?")
+                              timestamp = int(input("Epoch Timestamp: "))
+                              date = datetime.fromtimestamp(timestamp).date()
+                              day = days_names[datetime.fromtimestamp(timestamp).weekday()][1]    
+                              tkdb.add_tasks(task, timestamp, date, day)
+                        if "what" in query:
+                              if "today" in query:
+                                    date = datetime.today().strftime('%Y-%m-%d')
+                                    task_data = tkdb.get_tasks_by_day(date)
+                              if "tomorrow" in query:
+                                    date = datetime.today().strftime('%Y-%m-%d') + timedelta(days=1)
+                                    task_data = tkdb.get_tasks_by_day(date)
+                              for day in weekdays:
+                                    if day in query:
+                                          date = get_next_weekday(datetime.today().strftime("%Y-%m-%d"), day)
+                                          task_data = tkdb.get_tasks_by_day(date)
+                              if "evening" in query:
+                                    date = datetime.today().strftime('%Y-%m-%d')
+                                    start_time = datetime.now().replace(hour=18, minute=0, second=0, microsecond=0)
+                                    end_time = datetime.now().replace(hour=23, minute=59, second=59, microsecond=999999)                                    
+                                    task_data = tkdb.get_tasks_by_time(date, start_time, end_time)
+                              task_name, task_time = task_data
+                              datepoch = datetime.fromtimestamp(task_time)
+                              formatted_date = datepoch.strftime("%B %d, %Y at %I:%M %p")
+                              speak(f"{task_name} on {formatted_date}")
+                        if "how many" in query:
+                              if "today" in query:
+                                    date = datetime.today().strftime('%Y-%m-%d')
+                                    task_data = tkdb.get_tasks_by_day(date)
+                              if "tomorrow" in query:
+                                    date = datetime.today().strftime('%Y-%m-%d') + timedelta(days=1)
+                                    task_data = tkdb.get_tasks_by_day(date)
+                              for day in weekdays:
+                                    if day in query:
+                                          date = get_next_weekday(datetime.today().strftime("%Y-%m-%d"), day)
+                                          task_data = tkdb.get_tasks_by_day(date)
+                              if "evening" in query:
+                                    date = datetime.today().strftime('%Y-%m-%d')
+                                    start_time = datetime.now().replace(hour=18, minute=0, second=0, microsecond=0)
+                                    end_time = datetime.now().replace(hour=23, minute=59, second=59, microsecond=999999)                                    
+                                    task_data = tkdb.get_tasks_by_time(date, start_time, end_time)
+                              task_name, task_time = task_data
+                              speak()
+
             else:
                   ai = gemini.main(query)
                   speak(ai)
