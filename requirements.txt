@@ -10,3 +10,5 @@ requests
 pyjokes
 winshell
 python-dotenv
+win11toast
+threading

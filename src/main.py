@@ -487,8 +487,7 @@ def RunEdwin():
                                     end_time = datetime.now().replace(hour=23, minute=59, second=59, microsecond=999999)                                    
                                     task_data = tkdb.get_tasks_by_time(date, start_time, end_time)
                               task_name, task_time = task_data
-                              speak()
-
+                              speak(f"You have {len(task_data)} Tasks Pending...")
             else:
                   ai = gemini.main(query)
                   speak(ai)
