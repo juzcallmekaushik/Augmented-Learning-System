@@ -12,6 +12,8 @@ Features of ALS:
 6. Reading and Writing Emails
 7. Playing Music
 8. Enabling Focus Mode
+9. Getting Class Times from Google Calender
+10. Setting reminders & tasks
 
 
 **How to run ALS:**
