@@ -1,4 +1,5 @@
 .env
+app.py
 .DS_Store
 __pycache__
 assets

@@ -19,4 +19,5 @@ Features of ALS:
 1. Download this Repository
 2. Create a new .env file and input these: `GeminiAPI` & `MongoDBLink` (Like how its done in [.env.example](https://github.com/juzcallmekaushik/Augmented-Learning-System/blob/main/.env.example))
 3. Edit all the File Paths
-4. Run [main.py](https://github.com/juzcallmekaushik/Augmented-Learning-System/blob/main/src/main.py)
+4. Download all the Focus Timers for 60, 75, 90, 105, 120, 135, 150, 165, 180 Minutes from [OnlineAlarmKur](https://www.youtube.com/@OnlineAlarmKurTV) and then store them in a new folder called Assets/Focus_timers
+5. Run [main.py](https://github.com/juzcallmekaushik/Augmented-Learning-System/blob/main/src/main.py)
