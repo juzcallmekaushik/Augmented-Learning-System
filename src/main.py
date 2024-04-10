@@ -28,7 +28,6 @@ from datetime import timedelta
 from clock import (
       alarm,
       focus,
-      reminders,
 )
 
 from browser.control import (
@@ -45,6 +44,10 @@ from browser.control import (
       Instagram,
       SearchGoogle,
       LMS,
+)
+
+from browser.googlecalender import (
+      get_college_events,
 )
 
 from browser.spotify import (
@@ -441,7 +444,7 @@ def RunEdwin():
                         day = days_names[datetime.fromtimestamp(timestamp).weekday()][1]
                         rmdb.add_reminders(reminder, timestamp, date, day)
                   
-                  if "tasks" in query or "task" in query or "schedule" in query or "agenda" in query or "activities" in query or "appointment" in query or "plan" in query:
+                  if any(keyword in query for keyword in ["task", "tasks", "schedule", "agenda", "activities", "appointment", "plan"]):
                         if "add" in query or "new" in query:
                               speak("what is the task?")
                               task = input("Task: ")
@@ -488,6 +491,32 @@ def RunEdwin():
                                     task_data = tkdb.get_tasks_by_time(date, start_time, end_time)
                               task_name, task_time = task_data
                               speak(f"You have {len(task_data)} Tasks Pending...")
+
+                  if any(keyword in query for keyword in ["class", "classes", "lesson", "lessons"]):
+                        if any(keyword in query for keyword in ["what", "when", "where", "do"]):
+                              if "today" in query:
+                                    start_date_str = datetime.today().strftime('%Y-%m-%d')
+                                    print(start_date_str)
+                                    end = datetime.strptime(start_date_str, '%Y-%m-%d') + timedelta(days=1)
+                                    end_date = end.strftime('%Y-%m-%d')
+                                    print(end_date)
+                                    summary, start_time = get_college_events(start_date_str, end_date)
+                                    print(summary, start_time)
+                              elif "tomorrow" in query:
+                                    start_date_str = (datetime.today() + timedelta(days=1)).strftime('%Y-%m-%d')
+                                    end = datetime.strptime(start_date_str, '%Y-%m-%d') + timedelta(days=1)
+                                    end_date = end.strftime('%Y-%m-%d')
+                                    summary, start_time = get_college_events(start_date_str, end_date)
+                                    print(summary, start_time)
+                              else:
+                                    for day in weekdays:
+                                          if day in query:
+                                                start_date_str = str(get_next_weekday(datetime.today().strftime("%Y-%m-%d"), day))
+                                                end = datetime.strptime(start_date_str, '%Y-%m-%d') + timedelta(days=1)
+                                                end_date = end.strftime('%Y-%m-%d')
+                                                summary, start_time = get_college_events(start_date_str, end_date)
+                                                print(summary, start_time)
+                                                           
             else:
                   ai = gemini.main(query)
                   speak(ai)
