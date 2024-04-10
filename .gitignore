@@ -5,7 +5,6 @@ __pycache__
 assets
 venv
 client_secret.json
-store.txt
 test.py
 credentials.json
 token.json
