@@ -50,7 +50,7 @@ def get_college_events(start_date, end_date):
 
       if not events:
             speak(f"You have no classes on this date!")
-            return
+            return "", ""
 
       if len(events) == 1:
             event = events[0]

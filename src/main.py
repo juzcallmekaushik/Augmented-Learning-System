@@ -357,7 +357,7 @@ def RunEdwin():
                         LMS()
                         
 
-                  if "search for" in query or "find" in query or "show me" in query:
+                  if "search for" in query or "find" in query:
                         topic = query.replace("search for ", "")
                         topic = query.replace("find ", "")
                         topic = query.replace("show me ", "")
