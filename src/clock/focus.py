@@ -1,16 +1,12 @@
-"""from app import (
+from bot import (
     pyautogui,
     time,
     pyttsx3,
     sr,
     os,
-)"""
-
-import speech_recognition as sr
-import pyttsx3
-import time
-import pyautogui
-import os
+    webbrowser,
+    winreg
+)
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')

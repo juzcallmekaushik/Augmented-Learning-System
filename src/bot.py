@@ -20,7 +20,9 @@ import threading
 import subprocess
 import pyperclip
 import win11toast
+import winreg
 from dotenv import load_dotenv
+
 
 load_dotenv()
 GEMINIAPI = os.environ.get("GeminiAPI")
