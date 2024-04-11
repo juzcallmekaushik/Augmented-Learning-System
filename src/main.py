@@ -520,9 +520,11 @@ def RunEdwin():
                   if "near me" in query or "nearest" in query or "nearby" in query:
                         place1 = query.replace("nearest", "").replace("nearby", "").replace("near me", "").strip().replace(" ", "+")
                         if "what" in query:
-                              place_query = place1.replace("what+is+the+", "")
+                              	place_query = place1.replace("what+are+the+", "")
                         if "show" in query:
-                              place_query = place1.replace("show+me+the+", "")
+                              	place_query = place1.replace("show+are+the+", "")
+			if "where" in query:
+				place_query = place1.replace("where+are+the+", "")
                         link = f"https://www.google.com/maps/search/{place_query}+near+me"
                         webbrowser.open_new_tab(url=link)
                                                            
