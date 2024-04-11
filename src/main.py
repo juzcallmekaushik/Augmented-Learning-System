@@ -496,18 +496,14 @@ def RunEdwin():
                         if any(keyword in query for keyword in ["what", "when", "where", "do"]):
                               if "today" in query:
                                     start_date_str = datetime.today().strftime('%Y-%m-%d')
-                                    print(start_date_str)
                                     end = datetime.strptime(start_date_str, '%Y-%m-%d') + timedelta(days=1)
                                     end_date = end.strftime('%Y-%m-%d')
-                                    print(end_date)
                                     summary, start_time = get_college_events(start_date_str, end_date)
-                                    print(summary, start_time)
                               elif "tomorrow" in query:
                                     start_date_str = (datetime.today() + timedelta(days=1)).strftime('%Y-%m-%d')
                                     end = datetime.strptime(start_date_str, '%Y-%m-%d') + timedelta(days=1)
                                     end_date = end.strftime('%Y-%m-%d')
                                     summary, start_time = get_college_events(start_date_str, end_date)
-                                    print(summary, start_time)
                               else:
                                     for day in weekdays:
                                           if day in query:
@@ -515,7 +511,7 @@ def RunEdwin():
                                                 end = datetime.strptime(start_date_str, '%Y-%m-%d') + timedelta(days=1)
                                                 end_date = end.strftime('%Y-%m-%d')
                                                 summary, start_time = get_college_events(start_date_str, end_date)
-                                                print(summary, start_time)
+
 
                   if "near me" in query or "nearest" in query or "nearby" in query:
                         place1 = query.replace("nearest", "").replace("nearby", "").replace("near me", "").strip().replace(" ", "+")
