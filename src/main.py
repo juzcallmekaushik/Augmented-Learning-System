@@ -512,7 +512,6 @@ def RunEdwin():
                                                 end_date = end.strftime('%Y-%m-%d')
                                                 summary, start_time = get_college_events(start_date_str, end_date)
 
-
                   if "near me" in query or "nearest" in query or "nearby" in query:
                         place1 = query.replace("nearest", "").replace("nearby", "").replace("near me", "").strip().replace(" ", "+")
                         if "what" in query:
