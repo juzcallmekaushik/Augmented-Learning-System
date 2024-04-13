@@ -9,8 +9,7 @@ def speak(data):
     voice = 'en-GB-ThomasNeural'
     path = 'C:\\Users\\Kaushik\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\edge-tts.exe'
     command = f'{path} --voice "{voice}" --text "{data}" --write-media "data.mp3"'
-
-    # Execute the command and suppress output
+    
     process = subprocess.Popen(command, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=True)
     process.communicate()
 
