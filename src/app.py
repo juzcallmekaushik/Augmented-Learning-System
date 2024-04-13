@@ -41,7 +41,7 @@ def fetch_tasks():
       results = tasks.find({"completed": False})
       for result in results:
           if result["time"] <= timenow:
-            name = result["reminder"]
+            name = result["task"]
             notify("Task Completion Reminder", name)
             tasks.delete_one({"_id": result["_id"]})
             pass
