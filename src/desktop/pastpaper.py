@@ -8,8 +8,7 @@ from bot import (
 )
 
 from utils.data import (
-	alevel_subjects,
-	alevel_subject_names,
+	subject_names,
 	variants,
 	sessions,
 )
@@ -18,8 +17,8 @@ def open_pdf_with_app(file_path):
     subprocess.Popen([file_path], shell=True)
 
 def pastpaper(subjectcode, papercode):
-    validation = str(subjectcode) in alevel_subject_names
-    subject_name = alevel_subject_names.get(str(subjectcode), "Unknown Subject")
+    validation = str(subjectcode) in subject_names
+    subject_name = subject_names.get(str(subjectcode), "Unknown Subject")
     session = random.choice(sessions)
     year = random.randint(15, 23)
     if validation:

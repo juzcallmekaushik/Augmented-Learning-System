@@ -71,13 +71,7 @@ days_names = [
 
 weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
-alevel_subjects = [
-	      '9701', 
-		'9702', 
-    		'9709',
-]
-
-alevel_subject_names = {
+subject_names = {
 	'9709': 'Mathematics', 
 	'9701': 'Chemistry', 
 	'9702': 'Physics',
