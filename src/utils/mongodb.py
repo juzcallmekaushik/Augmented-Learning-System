@@ -6,6 +6,10 @@ from bot import (
     datetime,
 )
 
+from utils.speech import (
+      speak
+)
+
 from utils.data import (
     days_names,
 )
@@ -13,16 +17,6 @@ from utils.data import (
 client = pymongo.MongoClient(MONGOLINK, server_api=pymongo.server_api.ServerApi("1"), minPoolSize=1)
 timenow = int(time.time()) + 1
 
-
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
-engine.setProperty("rate",180)
-
-def speak(audio):
-      engine.say(audio)
-      print(f"Edwin: {audio}")
-      engine.runAndWait()
 
 class ClassesDB:
 	def __init__(self, client):

@@ -10,6 +10,7 @@ from bot import (
       pyautogui,
       pyperclip,
       webbrowser,
+      psutil,
 )
 import app
 from utils.data import (
@@ -18,6 +19,15 @@ from utils.data import (
       days_names,
       weekdays,
 )
+
+from utils.speech import (
+      speak
+)
+
+from utils.takecommand import (
+      takecommand
+)
+
 from makersuite import (
       emails,
       gemini,
@@ -57,6 +67,10 @@ from browser.spotify import (
       PrevMusic,
 )
 
+from desktop.pastpaper import (
+      pastpaper
+)
+
 from desktop.control import (
       batterypercentage,
       lockdown,
@@ -93,32 +107,18 @@ from utils.mongodb import (
       tkdb,
 )
 
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
-engine.setProperty("rate",180)
+def check_instance(appname):
+    if appname in (i.name() for i in psutil.process_iter()):
+        return True
+    else:
+        return False
 
-def speak(audio):
-      engine.say(audio)
-      print(f"Edwin: {audio}")
-      engine.runAndWait()
-
-def takecommand():
-      r = sr.Recognizer()
-      with sr.Microphone() as source: 
-            print("Listening...")
-            r.pause_threshold = 1
-            audio = r.listen(source)
-
-      try:
-            print("Recognizing...")
-            query = r.recognize_google(audio, language='en-in')
-            print(f"user said: {query}")
-      
-      except Exception as e:
-            return "none"
-      query = query.lower()
-      return query
+def RunApp():
+      if check_instance("app.exe"):
+            pass
+      else:
+            path = "C:\\Users\\Kaushik\\Documents\\Programming\\Augmented-Learning-System\\src\\app.exe"
+            os.startfile(path)
 
 def greet():
       hour = int(datetime.now().hour)
@@ -174,11 +174,25 @@ def get_next_weekday(current_date, target_day):
     return next_day_date.strftime("%Y-%m-%d")
 
 def RunEdwin():
+      time.sleep(1)
       speak(random.choice(HelloResponses))
       while True:
             query = takecommand().lower()
             result = any(keyword in query for keyword in updated_keywords)
             if result:
+                  if any(greeting in query for greeting in ["hey edwin", "hello edwin"]):
+                        response = gemini.main("Hello")
+                        speak(response)
+
+
+                  if "bored" in query:
+                        bored()
+
+
+                  if "joke" in query:
+                        joke()
+
+
                   if "time" in query:
                         currenttime()
                         
@@ -365,16 +379,11 @@ def RunEdwin():
                         
 
                   if "alarm" in query:
-                        if 'edwin' in query:
-                              TT = query.replace('edwin', '')
-                        else:
-                              TT = query
-                        
+                        TT = query.replace('edwin', '')
                         if 'for' in query:
                               tt1 = TT.replace('set an alarm for ', '')
                         else:
                               tt1 = TT.replace('set an alarm at ', '')
-                        
                         tt = tt1.replace('.', '')
                         Timing = tt.upper()
                         number = len(Timing)
@@ -383,19 +392,19 @@ def RunEdwin():
                   
                   if "focus session" in query or "study session" in query or "focus mode" in query:
                         duration1 = ""
-                        if "start a focus session" in query: 
+                        if "start a focus session" in query:
                               duration1 = query.replace("start a focus session for ", "")
-                        if "start a study session" in query: 
+                        elif "start a study session" in query:
                               duration1 = query.replace("start a study session for ", "")
+
                         if "hour" in duration1:
-                              if "hours" in duration1: 
-                                    min = int(duration1.replace("hours", ""))
-                              else: 
-                                    min = int(duration1.replace("hour", ""))
-                              minutes = min * 60
+                              minutes = int(duration1.replace(" hours", "").replace(" hour", "")) * 60
+                        else:
+                              minutes = int(duration1.replace(" minutes", "").replace(" minute", ""))
+
                         focus.focus_sessions(f"{minutes} minutes")
                         return
-                        
+
 
                   if 'open' in query:
                         if "bookmark" not in query:
@@ -413,7 +422,7 @@ def RunEdwin():
                         os.system(f"taskkill /im {closeappname}.exe")	
                         
 
-                  if 'standby' in query or "power-saving mode" in query or "hibernation" in query:
+                  if 'standby' in query or "power saving mode" in query or "hibernation" in query:
                         speak("initiating hibernation mode..")
                         speak("wake me up whenever you need anything")
                         time.sleep(2)
@@ -522,7 +531,13 @@ def RunEdwin():
                               place_query = place1.replace("where+are+the+", "")
                               link = f"https://www.google.com/maps/search/{place_query}+near+me"
                               webbrowser.open_new_tab(url=link)
-                                                           
+
+                  if "past paper" in query or "question paper" in query:
+                        speak("What subject and paper would you like to do?")
+                        subject = int(input(f"What is the subject code: "))
+                        paper = input("What paper would you like to do: ")
+                        fetch = pastpaper(subject, paper)
+                        speak(fetch)                       
             else:
                   ai = gemini.main(query)
                   speak(ai)

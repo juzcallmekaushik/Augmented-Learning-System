@@ -9,33 +9,29 @@ from bot import (
     time,
     win11toast,
     threading,
+    psutil,
 )
 
 from win11toast import toast
-#import main
+from utils.takecommand import (
+      takecommand
+)
 
-def takecommand():
-    r = sr.Recognizer()
-    with sr.Microphone() as source: 
-        print("Listening...")
-        r.pause_threshold = 1
-        audio = r.listen(source)
-
-    try:
-        print("Recognizing...")
-        query = r.recognize_google(audio, language='en-in')
-        print(f"user said: {query}")
-        return query.lower()
-    except Exception as e:
-        print(e)
-        return "none"
-
+def check_instance(appname):
+    if appname in (i.name() for i in psutil.process_iter()):
+        return True
+    else:
+        return False
+    
 def hotword():
     while True:
         wakeword = takecommand().lower()
         if "edwin" in wakeword:
-            main_path = "C:\\Users\\Kaushik\\Documents\\Programming\\Augmented-Learning-System\\src\\main.py"
-            os.startfile(main_path)
+            if check_instance("main.exe"):
+                pass
+            else:
+                main_path = "C:\\Users\\Kaushik\\Documents\\Programming\\Augmented-Learning-System\\src\\main.exe"
+                os.startfile(main_path)
 
 def fetch_tasks():
       client = pymongo.MongoClient(MONGOLINK, server_api=pymongo.server_api.ServerApi("1"), minPoolSize=1)

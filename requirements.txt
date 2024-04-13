@@ -12,3 +12,6 @@ winshell
 python-dotenv
 win11toast
 threading
+edge-tts
+pygame
+subprocess

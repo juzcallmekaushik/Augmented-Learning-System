@@ -10,7 +10,7 @@ updated_keywords = [
     "volume mute", "volume unmute", "volume up", "new browser window", "focus mode",
     "move left", "move right", "github", "instagram", "youtube", "stackoverflow", "search for", "find", "show me", "alarm", 
     "focus session", "study session", "lms", "college website", "standby", "hibernation", "power-saving mode", "bookmark", 
-    "remind", "reminder", "task", "near me", "nearby", "nearest", "plans"
+    "remind", "reminder", "task", "near me", "nearby", "nearest", "plans", "random question paper", "random past paper",
 ]
 
 
@@ -70,3 +70,33 @@ days_names = [
 ]
 
 weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+
+alevel_subjects = [
+	      '9701', 
+		'9702', 
+    		'9709',
+]
+
+alevel_subject_names = {
+	'9709': 'Mathematics', 
+	'9701': 'Chemistry', 
+	'9702': 'Physics',
+}
+
+sessions = [
+	"February March",
+	"May June", 
+	"October November"
+]
+
+variants = {
+	"feb_march": 2,
+	"may_june": [1, 2, 3],
+	"oct_nov": [1, 2, 3],
+}
+
+session_in_letters = [
+	"m", 
+	"s", 
+	"w"
+]

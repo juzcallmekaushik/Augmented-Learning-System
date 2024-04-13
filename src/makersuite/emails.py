@@ -17,36 +17,17 @@ from makersuite import (
       gemini,
 )
 
+from utils.speech import (
+      speak
+)
+
 from simplegmail import Gmail
 from simplegmail.query import construct_query
 
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
-engine.setProperty("rate",180)
 
-def speak(audio):
-      engine.say(audio)
-      print(f"Edwin: {audio}")
-      engine.runAndWait()
-
-def takecommand():
-      r = sr.Recognizer()
-      with sr.Microphone() as source: 
-            print("Listening...")
-            r.pause_threshold = 1
-            audio = r.listen(source)
-
-      try:
-            print("Recognizing...")
-            query = r.recognize_google(audio, language='en-in')
-            print(f"user said: {query}")
-      
-      except Exception as e:
-            return "none"
-      query = query.lower()
-      return query
-
+from utils.takecommand import (
+      takecommand
+)
 
 def ReadEmails():
       speak("opening gmail")

@@ -9,15 +9,9 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
-engine.setProperty("rate",180)
-
-def speak(audio):
-      engine.say(audio)
-      print(f"Edwin: {audio}")
-      engine.runAndWait()
+from utils.speech import (
+      speak
+)
 
 def get_college_events(start_date, end_date):
     creds = None
