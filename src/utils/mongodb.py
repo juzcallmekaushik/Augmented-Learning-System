@@ -17,32 +17,6 @@ from utils.data import (
 client = pymongo.MongoClient(MONGOLINK, server_api=pymongo.server_api.ServerApi("1"), minPoolSize=1)
 timenow = int(time.time()) + 1
 
-
-class ClassesDB:
-	def __init__(self, client):
-		self.client = client
-		self.db = self.client.Edwin
-		self.classes = self.db.classes
-
-	def new_class(self, day, classname, teacher, time, location):
-		self.classes.insert_one({"_id": f"{day}_{timenow}","class_name": str(classname), "teacher": teacher, "location": location,"class_time": str(time)})
-		return f"New {classname} class has been added to the Database"
-
-	def get_class(self, classname=None, teacher=None, time=None):
-		query = {}
-
-		if classname:
-			query["class_name"] = classname
-		if teacher:
-			query["teacher"] = teacher
-		if time:
-			query["class_time"] = time
-
-		result = self.classes.find_one(query)
-		return result
-
-csdb = ClassesDB(client)
-
 class BookmarkDB:
 	def __init__(self, client):
 		self.client = client
