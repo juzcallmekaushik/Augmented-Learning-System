@@ -422,8 +422,8 @@ def RunEdwin():
                         os.system(f"taskkill /im {closeappname}.exe")	
                         
 
-                  if 'standby' in query or "power saving mode" in query or "hibernation" in query:
-                        speak("initiating hibernation mode..")
+                  if 'standby' in query or "stand by" in query or "power saving mode" in query or "hibernation" in query:
+                        speak("initiating hibernation mode")
                         speak("wake me up whenever you need anything")
                         time.sleep(2)
                         return

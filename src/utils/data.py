@@ -9,7 +9,7 @@ updated_keywords = [
     "charger connected", "close the current window", "volume down", 
     "volume mute", "volume unmute", "volume up", "new browser window", "focus mode",
     "move left", "move right", "github", "instagram", "youtube", "stackoverflow", "search for", "find", "show me", "alarm", 
-    "focus session", "study session", "lms", "college website", "standby", "hibernation", "power-saving mode", "bookmark", 
+    "focus session", "study session", "lms", "college website", "standby", "hibernation", "power saving mode", "bookmark", "stand by",
     "remind", "reminder", "task", "near me", "nearby", "nearest", "plans", "random question paper", "random past paper",
 ]
 
