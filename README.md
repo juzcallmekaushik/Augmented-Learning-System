@@ -21,7 +21,7 @@ Augmented Learning System (ALS) is a desktop assistant that helps you control yo
 - Random Past Paper Feature
 - Storing Data in MongoDB
 
-**How to run ALS:**
+**How to run ALS**
 1. Download this Repository
 2. Create a new .env file and input these: `GeminiAPI` & `MongoDBLink` (Like how its done in [.env.example](https://github.com/juzcallmekaushik/Augmented-Learning-System/blob/main/.env.example))
 3. Edit all the file paths so the code runs smoothly
@@ -29,3 +29,15 @@ Augmented Learning System (ALS) is a desktop assistant that helps you control yo
 5. Extract the zip folder and move it to the root directory of Augmented-Learning-System
 6. Download Credentials, Tokens & API Keys so the Google Calender, Gemini & Gmail functions can work properly
 7. Run [main.py](https://github.com/juzcallmekaushik/Augmented-Learning-System/blob/main/src/main.py)
+
+
+**How to contribute**
+I am very happy to receive and merge your contributions into this repository! To contribute via pull request, follow these steps:
+1. Fork the repository.
+2. Create a new branch for your feature or fix.
+3. Implement your changes, making sure to follow the project's coding style and guidelines.
+4. Test your changes locally to ensure they work as expected.
+5. Commit your changes and push them to your forked repository.
+6. Open a pull request, providing a clear description of the changes you've made and any relevant context.
+7. Engage in any discussions or address any feedback related to your pull request.
+8. Once approved, your changes will be merged into the main repository.
