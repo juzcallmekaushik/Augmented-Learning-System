@@ -39,5 +39,4 @@ I am very happy to receive and merge your contributions into this repository! To
 4. Test your changes locally to ensure they work as expected.
 5. Commit your changes and push them to your forked repository.
 6. Open a pull request, providing a clear description of the changes you've made and any relevant context.
-7. Engage in any discussions or address any feedback related to your pull request.
-8. Once approved, your changes will be merged into the main repository.
+7. Once approved, your changes will be merged into the main repository.
