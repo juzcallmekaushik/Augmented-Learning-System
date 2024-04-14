@@ -32,7 +32,6 @@ Augmented Learning System (ALS) is a desktop assistant that helps you control yo
 
 
 **How to contribute**
-I am very happy to receive and merge your contributions into this repository! To contribute via pull request, follow these steps:
 1. Fork the repository.
 2. Create a new branch for your feature or fix.
 3. Implement your changes, making sure to follow the project's coding style and guidelines.
