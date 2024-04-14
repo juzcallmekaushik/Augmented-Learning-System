@@ -14,7 +14,7 @@ Augmented Learning System (ALS) is a desktop assistant that helps you control yo
 9. Getting Events from Google Calender
 10. Setting reminders & tasks
 
-**Features of V2.0.0**
+**Features of V2.1.0**
 - Realistic Voice
 - Responding with Google Gemini AI
 - Fetching Events from Google Calender
