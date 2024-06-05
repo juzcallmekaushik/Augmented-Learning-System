@@ -35,7 +35,7 @@ def hotword():
                 pass
             else:
                 main_path = "C:\\Users\\Kaushik\\Documents\\Programming\\Augmented-Learning-System\\src\\main.py"
-                os.startfile(main_path)
+                os.startfile(main_path) 
 
 def fetch_tasks():
       timenow = int(time.time()) + 1
