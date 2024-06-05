@@ -13,9 +13,13 @@ from bot import (
 )
 
 from win11toast import toast
+import platform
 from utils.takecommand import (
       takecommand
 )
+
+client = pymongo.MongoClient(MONGOLINK, server_api=pymongo.server_api.ServerApi("1"), minPoolSize=1)
+db = client.Edwin
 
 def check_instance(appname):
     if appname in (i.name() for i in psutil.process_iter()):
@@ -30,13 +34,11 @@ def hotword():
             if check_instance("main.exe"):
                 pass
             else:
-                main_path = "C:\\Users\\Kaushik\\Documents\\Programming\\Augmented-Learning-System\\src\\main.exe"
+                main_path = "C:\\Users\\Kaushik\\Documents\\Programming\\Augmented-Learning-System\\src\\main.py"
                 os.startfile(main_path)
 
 def fetch_tasks():
-      client = pymongo.MongoClient(MONGOLINK, server_api=pymongo.server_api.ServerApi("1"), minPoolSize=1)
       timenow = int(time.time()) + 1
-      db = client.Edwin
       tasks = db.tasks
       results = tasks.find({"completed": False})
       for result in results:
@@ -48,9 +50,7 @@ def fetch_tasks():
       threading.Timer(120, fetch_tasks).start()
 
 def fetch_reminder():
-      client = pymongo.MongoClient(MONGOLINK, server_api=pymongo.server_api.ServerApi("1"), minPoolSize=1)
       timenow = int(time.time()) + 1
-      db = client.Edwin
       reminders = db.reminders
       results = reminders.find({"completed": False})
       for result in results:
@@ -80,4 +80,5 @@ def app_startup():
     threadings()
 
 if __name__ == "__main__":
-    app_startup()
+    #app_startup()
+    update_device_paths()
