@@ -5,19 +5,24 @@ from bot import (
     sr,
     os,
     webbrowser,
-    winreg
+    winreg,
+    psutil
 )
 
 from utils.speech import (
       speak
 )
 
+username = psutil.users()
+for user_name in username:
+      first_name = user_name[0]
+
 from utils.takecommand import (
       takecommand
 )
 
 def focus_sessions(duration):
-      os.startfile("C:\\Users\\Kaushik\\AppData\\Roaming\\Spotify\\Spotify.exe")
+      os.startfile(f"C:\\Users\\{first_name}\\AppData\\Roaming\\Spotify\\Spotify.exe")
       time.sleep(2)
       pyautogui.hotkey("ctrl", "l")
       pyautogui.press("backspace")
@@ -33,7 +38,8 @@ def focus_sessions(duration):
       time.sleep(3)
       pyautogui.click(1877, 11)
       time.sleep(1)      
-      focus_timers_dir = "C:\\Users\\Kaushik\\Documents\\Programming\\Augmented Learning System - Edwin\\assets\\focus_timers"
+      base_dir = os.path.dirname(os.path.abspath(__file__)).replace("\\", "/")
+      focus_timers_dir = f"{base_dir}\\assets\\focus_timers"
       durations_mapping = {
             "60 minutes": "60",
             "75 minutes": "75",

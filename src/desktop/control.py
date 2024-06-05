@@ -79,6 +79,7 @@ def username():
     for user_name in username:
         first_name = user_name[0]
         speak(f"Sir, this computer is signed to {first_name} as a username.")
+        return first_name
 
 def Volumeup():
     pyautogui.press("volumeup")

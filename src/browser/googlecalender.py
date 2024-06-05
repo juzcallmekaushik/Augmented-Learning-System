@@ -15,8 +15,8 @@ from utils.speech import (
 
 def get_college_events(start_date, end_date):
     creds = None
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    if os.path.exists("credentials.json"):
+        creds = Credentials.from_authorized_user_file("credentials.json", SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())

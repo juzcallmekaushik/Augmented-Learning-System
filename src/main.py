@@ -18,6 +18,7 @@ from utils.data import (
 	HelloResponses,
       days_names,
       weekdays,
+      application_data,
 )
 
 from utils.speech import (
@@ -156,22 +157,14 @@ def currenttime():
 import calendar
 from datetime import datetime, timedelta
 
-def get_next_weekday(current_date, target_day):
-    weekdays = {
-        'monday': 0, 'tuesday': 1, 'wednesday': 2,
-        'thursday': 3, 'friday': 4, 'saturday': 5, 'sunday': 6
-    }
-    current_date_obj = datetime.strptime(current_date, "%Y-%m-%d")
-    current_day_index = current_date_obj.weekday()
-
-    target_day_index = weekdays[target_day.lower()]
-    days_until_target = (target_day_index - current_day_index) % 7
-
-    if days_until_target == 0:
-        days_until_target = 7
-
-    next_day_date = current_date_obj + timedelta(days=days_until_target)
-    return next_day_date.strftime("%Y-%m-%d")
+def get_next_weekday(start_date, weekday_name):
+    days_names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    day_idx = days_names.index(weekday_name.capitalize())
+    start = datetime.strptime(start_date, "%Y-%m-%d")
+    days_ahead = day_idx - start.weekday()
+    if days_ahead <= 0:
+        days_ahead += 7
+    return (start + timedelta(days_ahead)).strftime("%Y-%m-%d")
 
 def RunEdwin():
       time.sleep(1)
@@ -408,19 +401,20 @@ def RunEdwin():
 
                   if 'open' in query:
                         if "bookmark" not in query:
-                              openappname = query.replace('edwin ', '')
-                              openapp = openappname.replace('open ', '')
-                              pyautogui.hotkey('alt', 'space')
+                              name = query.replace('open ', '')
+                              app = application_data.get(name)
+                              speak("Opening " + name)
+                              pyautogui.hotkey('win', 's')
                               time.sleep(1)
-                              pyautogui.typewrite(openapp)
-                              time.sleep(1)
+                              pyautogui.typewrite(app)
+                              time.sleep(2)
                               pyautogui.press('enter')
                               
                   if 'close' in query:
-                        closeappname = query.replace('close', '')
-                        speak("Closing " + closeappname)
-                        os.system(f"taskkill /im {closeappname}.exe")	
-                        
+                        name = query.replace('close', '')
+                        app = application_data.get(name)
+                        speak("Closing " + name)
+                        os.system(f"taskkill /im {app}.exe")
 
                   if 'standby' in query or "stand by" in query or "power saving mode" in query or "hibernation" in query:
                         speak("initiating hibernation mode")
@@ -455,51 +449,67 @@ def RunEdwin():
                   
                   if any(keyword in query for keyword in ["task", "tasks", "schedule", "agenda", "activities", "appointment", "plan"]):
                         if "add" in query or "new" in query:
-                              speak("what is the task?")
+                              speak("What is the task?")
                               task = input("Task: ")
-                              speak("what time would you like me to remind you?")
+                              speak("What time would you like me to remind you?")
                               timestamp = int(input("Epoch Timestamp: "))
-                              date = datetime.fromtimestamp(timestamp).date()
-                              day = days_names[datetime.fromtimestamp(timestamp).weekday()][1]    
+                              date = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')
+                              day = days_names[datetime.fromtimestamp(timestamp).weekday()]
                               tkdb.add_tasks(task, timestamp, date, day)
+                        
                         if "what" in query:
+                              task_data = []
                               if "today" in query:
                                     date = datetime.today().strftime('%Y-%m-%d')
                                     task_data = tkdb.get_tasks_by_day(date)
-                              if "tomorrow" in query:
-                                    date = datetime.today().strftime('%Y-%m-%d') + timedelta(days=1)
+                              elif "tomorrow" in query:
+                                    date = (datetime.today() + timedelta(days=1)).strftime('%Y-%m-%d')
                                     task_data = tkdb.get_tasks_by_day(date)
-                              for day in weekdays:
-                                    if day in query:
-                                          date = get_next_weekday(datetime.today().strftime("%Y-%m-%d"), day)
-                                          task_data = tkdb.get_tasks_by_day(date)
-                              if "evening" in query:
-                                    date = datetime.today().strftime('%Y-%m-%d')
-                                    start_time = datetime.now().replace(hour=18, minute=0, second=0, microsecond=0)
-                                    end_time = datetime.now().replace(hour=23, minute=59, second=59, microsecond=999999)                                    
-                                    task_data = tkdb.get_tasks_by_time(date, start_time, end_time)
-                              task_name, task_time = task_data
-                              datepoch = datetime.fromtimestamp(task_time)
-                              formatted_date = datepoch.strftime("%B %d, %Y at %I:%M %p")
-                              speak(f"{task_name} on {formatted_date}")
+                              else:
+                                    for day in weekdays:
+                                          if day in query:
+                                                date = get_next_weekday(datetime.today().strftime("%Y-%m-%d"), day)
+                                                task_data = tkdb.get_tasks_by_day(date)
+                                                break
+                                    if "evening" in query:
+                                          date = datetime.today().strftime('%Y-%m-%d')
+                                          start_time = datetime.now().replace(hour=18, minute=0, second=0, microsecond=0)
+                                          end_time = datetime.now().replace(hour=23, minute=59, second=59, microsecond=999999)
+                                          task_data = tkdb.get_tasks_by_time(date, start_time, end_time)
+
+                              if not task_data:
+                                    speak("You have no tasks.")
+                              else:
+                                    for task in task_data:
+                                          task_name, task_time = task
+                                          datepoch = datetime.fromtimestamp(task_time)
+                                          formatted_date = datepoch.strftime("%B %d, %Y at %I:%M %p")
+                                          speak(f"{task_name} on {formatted_date}")
+
                         if "how many" in query:
+                              task_data = []
                               if "today" in query:
                                     date = datetime.today().strftime('%Y-%m-%d')
                                     task_data = tkdb.get_tasks_by_day(date)
-                              if "tomorrow" in query:
-                                    date = datetime.today().strftime('%Y-%m-%d') + timedelta(days=1)
+                              elif "tomorrow" in query:
+                                    date = (datetime.today() + timedelta(days=1)).strftime('%Y-%m-%d')
                                     task_data = tkdb.get_tasks_by_day(date)
-                              for day in weekdays:
-                                    if day in query:
-                                          date = get_next_weekday(datetime.today().strftime("%Y-%m-%d"), day)
-                                          task_data = tkdb.get_tasks_by_day(date)
-                              if "evening" in query:
-                                    date = datetime.today().strftime('%Y-%m-%d')
-                                    start_time = datetime.now().replace(hour=18, minute=0, second=0, microsecond=0)
-                                    end_time = datetime.now().replace(hour=23, minute=59, second=59, microsecond=999999)                                    
-                                    task_data = tkdb.get_tasks_by_time(date, start_time, end_time)
-                              task_name, task_time = task_data
-                              speak(f"You have {len(task_data)} Tasks Pending...")
+                              else:
+                                    for day in weekdays:
+                                          if day in query:
+                                                date = get_next_weekday(datetime.today().strftime("%Y-%m-%d"), day)
+                                                task_data = tkdb.get_tasks_by_day(date)
+                                                break
+                                    if "evening" in query:
+                                          date = datetime.today().strftime('%Y-%m-%d')
+                                          start_time = datetime.now().replace(hour=18, minute=0, second=0, microsecond=0)
+                                          end_time = datetime.now().replace(hour=23, minute=59, second=59, microsecond=999999)
+                                          task_data = tkdb.get_tasks_by_time(date, start_time, end_time)
+
+                              if not task_data:
+                                    speak("You have nothing on your schedule.")
+                              else:
+                                    speak(f"You have {len(task_data)} tasks pending.")
 
                   if any(keyword in query for keyword in ["class", "classes", "lesson", "lessons"]):
                         if any(keyword in query for keyword in ["what", "when", "where", "do"]):
@@ -524,11 +534,11 @@ def RunEdwin():
                   if "near me" in query or "nearest" in query or "nearby" in query:
                         place1 = query.replace("nearest", "").replace("nearby", "").replace("near me", "").strip().replace(" ", "+")
                         if "what" in query:
-                              place_query = place1.replace("what+are+the+", "")
+                              place_query = place1.replace("what+is+the+", "")
                         if "show" in query:
-                              place_query = place1.replace("show+are+the+", "")
+                              place_query = place1.replace("show+me+the+", "")
                         if "where" in query:
-                              place_query = place1.replace("where+are+the+", "")
+                              place_query = place1.replace("where+is+the+", "")
                               link = f"https://www.google.com/maps/search/{place_query}+near+me"
                               webbrowser.open_new_tab(url=link)
 

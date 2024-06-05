@@ -87,7 +87,7 @@ def MusicPlay():
             pyautogui.press("enter")                  
       
       time.sleep(3)
-      pyautogui.click(1877, 11)
+      pyautogui.hotkey("alt", "esc")
 
 def MusicStop():
       pyautogui.press('playpause')

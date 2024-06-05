@@ -5,7 +5,7 @@ updated_keywords = [
     "screenshot", "switch tab", "refresh the screen", "maximize window", "maximise window",
     "minimize window", "minimise window", "tasks", "schedule", "agenda", "activities", "appointments",
     "settings", "recycle bin", "reload tab", "file explorer", 
-    "task manager", "new tab", "old tab", "username", "show desktop", 
+    "task manager", "new tab", "old tab", "username", "show desktop", "open", "close",
     "charger connected", "close the current window", "volume down", 
     "volume mute", "volume unmute", "volume up", "new browser window", "focus mode",
     "move left", "move right", "github", "instagram", "youtube", "stackoverflow", "search for", "find", "show me", "alarm", 
@@ -94,3 +94,22 @@ session_in_letters = [
 	"s", 
 	"w"
 ]
+
+application_data = {
+    "google chrome": "chrome",
+    "google": "chrome",
+    "chrome": "chrome",
+    "spotify": "spotify",
+    "discord": "discord",
+    "microsoft edge": "edge",
+    "microsoft word": "word",
+    "microsoft powerpoint": "powerpoint",
+    "microsoft access": "access",
+    "microsoft excel": "excel",
+    "whatsapp": "whatsapp",
+    "edge": "edge",
+    "word": "word",
+    "powerpoint": "powerpoint",
+    "slides": "powerpoint",
+    "spreadsheet": "excel",
+}

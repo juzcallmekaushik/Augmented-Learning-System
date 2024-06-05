@@ -21,6 +21,8 @@ from utils.takecommand import (
 client = pymongo.MongoClient(MONGOLINK, server_api=pymongo.server_api.ServerApi("1"), minPoolSize=1)
 db = client.Edwin
 
+global selected_voice
+
 def check_instance(appname):
     if appname in (i.name() for i in psutil.process_iter()):
         return True
@@ -28,15 +30,14 @@ def check_instance(appname):
         return False
     
 def hotword():
+    base_dir = os.path.dirname(os.path.abspath(__file__)).replace("\\", "/")
+    main_path = f"{base_dir}//main.py"  
     while True:
-        wakeword = takecommand().lower()
+        wakeword = takecommand().lower()  
         if "edwin" in wakeword:
-            if check_instance("main.exe"):
-                pass
-            else:
-                main_path = "C:\\Users\\Kaushik\\Documents\\Programming\\Augmented-Learning-System\\src\\main.py"
-                os.startfile(main_path) 
-
+            if not check_instance("main.exe"):
+                os.startfile(main_path)
+ 
 def fetch_tasks():
       timenow = int(time.time()) + 1
       tasks = db.tasks
