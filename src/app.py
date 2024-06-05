@@ -80,5 +80,4 @@ def app_startup():
     threadings()
 
 if __name__ == "__main__":
-    #app_startup()
-    update_device_paths()
+    app_startup()
