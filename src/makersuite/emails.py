@@ -21,10 +21,6 @@ from utils.speech import (
       speak
 )
 
-from simplegmail import Gmail
-from simplegmail.query import construct_query
-
-
 from utils.takecommand import (
       takecommand
 )
