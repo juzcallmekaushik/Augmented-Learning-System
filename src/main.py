@@ -15,6 +15,7 @@ from bot import (
 import app
 from utils.data import (
       updated_keywords,
+      HruResponses,
 	HelloResponses,
       days_names,
       weekdays,
@@ -177,6 +178,9 @@ def RunEdwin():
                         response = gemini.main("Hello")
                         speak(response)
 
+                  if "how are you" in query:
+                        response = random.choice(HruResponses)
+                        speak(response)
 
                   if "bored" in query:
                         bored()

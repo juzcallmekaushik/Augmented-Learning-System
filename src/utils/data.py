@@ -1,5 +1,5 @@
 updated_keywords = [
-    "edwin", "class", "classes", "lesson", "lessons", "date", "day", "time", "none", 
+    "none", "edwin", "class", "classes", "lesson", "lessons", "date", "day", "time", "how are you",
     "email",  "music", "song", "weather", "temperature", "location", "where am i", 
     "news", "battery percentage", "ip address", "restart", "shutdown", "lock", 
     "screenshot", "switch tab", "refresh the screen", "maximize window", "maximise window",
@@ -52,6 +52,30 @@ HelloResponses = [
       "Greetings! What can I assist you with today?",
       "Hello! How can I make your day more productive?",
 ]
+
+HruResponses = [
+    "I'm doing well, thank you for asking!", 
+    "I'm great, thanks! How about you?",
+    "I'm feeling good, thanks for asking. How can I assist you today?",
+    "I'm doing well, how about yourself?",
+    "I'm doing fine, thanks for asking. What can I do for you?",
+    "I'm doing well, thank you! How about you?",
+    "I'm doing well, thank you. What do you need help with today?",
+    "I'm doing great, thanks for asking! How can I assist you?",
+    "I'm doing well, thanks for asking. What's on your mind?",
+    "I'm doing fine, thank you for asking. Let me know how I can assist you.",
+    "I'm doing well, thanks! Ready to assist you.",
+    "I'm doing good, thanks for asking. How can I help you?",
+    "I'm doing well, thanks for asking. How can I make your day better?",
+    "I'm doing well, thank you. How can I assist you today?",
+    "I'm doing great, thank you for asking. What can I do for you?",
+    "I'm doing well, thanks for asking. What's on your agenda today?",
+    "I'm doing fine, thanks for asking. Let me know how I can help.",
+    "I'm doing well, thanks for asking. Ready to assist you.",
+    "I'm doing well, thanks for asking. What can I do for you today?",
+    "I'm doing well, thank you. What do you need help with today?"
+]
+
 
 HelloWords = [
     "hello", "hi", "greeting", "hi there", "hey", "what's up",
