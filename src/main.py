@@ -155,9 +155,6 @@ def currenttime():
     time = datetime.now().strftime('%I:%M %p')
     speak(f"the current time is {time}.")
 
-import calendar
-from datetime import datetime, timedelta
-
 def get_next_weekday(start_date, weekday_name):
     days_names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     day_idx = days_names.index(weekday_name.capitalize())
@@ -320,7 +317,7 @@ def RunEdwin():
                         closecurrentwindow()
                         
 
-                  if "volume down" in query:
+                  if "volume down" in query or "decrease volume" in query:
                         Volumedown()
                         
 
@@ -332,7 +329,7 @@ def RunEdwin():
                         Volumeunmute()
                         
 
-                  if "volume up" in query:
+                  if "volume up" in query or "increase volume" in query:
                         Volumeup()
                         
 

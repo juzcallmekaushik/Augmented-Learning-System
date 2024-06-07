@@ -4,7 +4,7 @@ updated_keywords = [
     "news", "battery percentage", "ip address", "restart", "shutdown", "lock", 
     "screenshot", "switch tab", "refresh the screen", "maximize window", "maximise window",
     "minimize window", "minimise window", "tasks", "schedule", "agenda", "activities", "appointments",
-    "settings", "recycle bin", "reload tab", "file explorer", 
+    "settings", "recycle bin", "reload tab", "file explorer", "decrease volume", "increase volume",
     "task manager", "new tab", "old tab", "username", "show desktop", "open", "close",
     "charger connected", "close the current window", "volume down", 
     "volume mute", "volume unmute", "volume up", "new browser window", "focus mode",
