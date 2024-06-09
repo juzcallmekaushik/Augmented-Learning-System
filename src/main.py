@@ -438,11 +438,13 @@ def RunEdwin():
                               webbrowser.open_new_tab(url=link)
 
                   if "remind" in query or "reminder" in query:
+                        remind = None
                         if "remind me to" in query:
-                              reminder = query.replace("remind me to ", "")
+                              remind = query.replace("remind me to ", "")
                         elif "set reminder to" in query:
-                              reminder = query.replace("set reminder to ", "")
+                              remind = query.replace("set reminder to ", "")
                         speak("what time would you like me to remind you?")
+                        reminder = str(remind)
                         timestamp = int(input("Epoch Timestamp: "))
                         date = datetime.fromtimestamp(timestamp).date()
                         day = days_names[datetime.fromtimestamp(timestamp).weekday()][1]

@@ -9,20 +9,19 @@ from googleapiclient.errors import HttpError
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
-from utils.speech import (
-      speak
-)
+from utils.speech import speak
 
 def get_college_events(start_date, end_date):
     creds = None
-    if os.path.exists("credentials.json"):
-        creds = Credentials.from_authorized_user_file("credentials.json", SCOPES)
+    credentials_path = "credentials.json"
+    if os.path.exists("token.json"):
+        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                "credentials.json", SCOPES
+                credentials_path, SCOPES
             )
             creds = flow.run_local_server(port=0)
         with open("token.json", "w") as token:
