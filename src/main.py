@@ -433,7 +433,7 @@ def RunEdwin():
                               link = pyperclip.paste()
                               bmdb.add_bookmark(name, link)
                         if "open" in query:
-                              name = input("what is the name of the bookmark?")
+                              name = input("what is the name of the bookmark: ")
                               link = bmdb.get_bookmark(name)
                               webbrowser.open_new_tab(url=link)
 

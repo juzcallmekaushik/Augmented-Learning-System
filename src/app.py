@@ -35,7 +35,7 @@ def hotword():
     while True:
         wakeword = takecommand().lower()  
         if "edwin" in wakeword:
-            if not check_instance("main.exe"):
+            if not check_instance("main.py"):
                 os.startfile(main_path)
  
 def fetch_tasks():
